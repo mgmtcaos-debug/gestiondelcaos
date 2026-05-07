@@ -7,7 +7,7 @@ import { PostCard } from "@/components/PostCard";
 
 const CATS = ["todas", "cultura", "plata", "creatividad", "sin filtro"];
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "blog — CAOS" },
