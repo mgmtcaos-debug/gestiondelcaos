@@ -17,7 +17,6 @@ export function SiteNav() {
 
   function goContacto(e: React.MouseEvent) {
     e.preventDefault();
-    setOpen(false);
     const scroll = () => {
       const el = document.getElementById("newsletter");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -32,8 +31,8 @@ export function SiteNav() {
   const links = (
     <>
       <a href="/" onClick={goInicio} className={linkCls}>inicio</a>
-      <Link to="/blog" onClick={() => setOpen(false)} className={linkCls}>blog</Link>
-      <Link to="/recursos" onClick={() => setOpen(false)} className={linkCls}>recursos</Link>
+      <Link to="/blog" className={linkCls}>blog</Link>
+      <Link to="/recursos" className={linkCls}>recursos</Link>
       <a href="#newsletter" onClick={goContacto} className={linkCls}>contacto</a>
     </>
   );
