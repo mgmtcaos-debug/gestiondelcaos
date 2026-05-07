@@ -54,12 +54,16 @@ export function ResourceForm({ id }: { id?: string }) {
         <textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inp} />
       </div>
       <div>
-        <label className={lbl}>URL del archivo</label>
-        <input required value={form.file_url} onChange={(e) => setForm({ ...form, file_url: e.target.value })} className={inp} />
+        <label className={lbl}>archivo descargable</label>
+        <div className="mt-1">
+          <FileUpload value={form.file_url} onChange={(url) => setForm({ ...form, file_url: url })} accept="*/*" folder="resources" />
+        </div>
       </div>
       <div>
-        <label className={lbl}>imagen de portada (URL)</label>
-        <input value={form.cover_image_url} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })} className={inp} />
+        <label className={lbl}>imagen de portada</label>
+        <div className="mt-1">
+          <FileUpload value={form.cover_image_url} onChange={(url) => setForm({ ...form, cover_image_url: url })} accept="image/*" folder="covers" />
+        </div>
       </div>
       <div className="flex gap-6">
         <label className="flex items-center gap-2 text-sm">
