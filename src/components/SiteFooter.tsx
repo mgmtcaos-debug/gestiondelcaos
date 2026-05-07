@@ -22,7 +22,7 @@ export function SiteFooter() {
   }
 
   return (
-    <footer className="border-t border-silver/60 mt-24 px-5 md:px-10 py-14">
+    <footer id="newsletter" className="border-t border-silver/60 mt-24 px-5 md:px-10 py-14">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start">
         <div>
           <h3 className="font-display text-4xl md:text-5xl leading-none">
