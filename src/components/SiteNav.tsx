@@ -1,17 +1,13 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
 import logo from "@/assets/caos-logo.png";
 
 export function SiteNav() {
   const linkCls = "tracking-editorial text-[11px] uppercase hover:text-cherry transition-colors whitespace-nowrap font-sans";
   const location = useLocation();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
 
   function goInicio(e: React.MouseEvent) {
     e.preventDefault();
-    setOpen(false);
     if (location.pathname !== "/") {
       navigate({ to: "/" });
       return;
