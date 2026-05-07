@@ -34,7 +34,7 @@ function Dashboard() {
       <div className="mt-10 grid md:grid-cols-3 gap-6">
         <Stat n={counts.posts} l="publicaciones" to="/admin/posts" />
         <Stat n={counts.resources} l="recursos" to="/admin/recursos" />
-        <Stat n={counts.subs} l="suscriptores" to="/admin" />
+        <Stat n={counts.subs} l="suscriptores" to="/admin/subscribers" />
       </div>
     </AdminShell>
   );

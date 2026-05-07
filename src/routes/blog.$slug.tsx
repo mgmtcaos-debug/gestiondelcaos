@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
+import { PostMediaGallery } from "@/components/PostMediaGallery";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: PostPage,
@@ -45,6 +46,7 @@ function PostPage() {
               prose-p:text-ink prose-a:text-dusty prose-strong:text-cherry">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
+            <PostMediaGallery postId={post.id} />
           </>
         )}
       </article>

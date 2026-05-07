@@ -37,6 +37,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           {tab("/admin", "dashboard")}
           {tab("/admin/posts", "publicaciones")}
           {tab("/admin/recursos", "recursos")}
+          {tab("/admin/subscribers", "suscriptores")}
           <button onClick={() => supabase.auth.signOut().then(() => navigate({ to: "/admin/login" }))}
             className="ml-3 text-[11px] tracking-editorial uppercase border border-ink/40 px-3 py-1.5 hover:bg-ink hover:text-cream">
             salir
