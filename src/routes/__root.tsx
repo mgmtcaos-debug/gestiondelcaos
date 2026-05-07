@@ -7,6 +7,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
+import { BottomNav } from "@/components/BottomNav";
 
 import appCss from "../styles.css?url";
 
