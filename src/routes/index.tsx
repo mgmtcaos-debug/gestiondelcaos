@@ -111,62 +111,47 @@ function Home() {
   );
 }
 
-function DesktopDraggable({ img, className, rot, delay }: { img: string; className: string; rot: string; delay: number }) {
-  return (
-    <motion.img
-      src={img}
-      alt=""
-      drag
-      dragMomentum={false}
-      dragConstraints={{ left: -150, right: 150, top: -80, bottom: 80 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay }}
-      className={`hidden md:block absolute paper-shadow-lg cursor-grab active:cursor-grabbing ${className}`}
-      style={{ rotate: rot, touchAction: "none", userSelect: "none" }}
-      draggable={false}
-    />
-  );
-}
-
-function MobileDraggable() {
+function HeroCollage() {
   const ref = useRef<HTMLDivElement>(null);
+  // images positioned around/behind the logo
   const items = [
-    { src: plato, top: "8%", left: "5%", w: "w-24", rot: "-8deg" },
-    { src: bordado, top: "20%", right: "8%", w: "w-28", rot: "10deg" },
-    { src: bandeja, bottom: "8%", left: "15%", w: "w-32", rot: "-4deg" },
+    { src: plato, className: "top-[6%] left-[2%] w-24 sm:w-32 md:w-44", rot: "-10deg", z: 5, delay: 0.8 },
+    { src: bordado, className: "top-[10%] right-[2%] w-28 sm:w-36 md:w-48", rot: "8deg", z: 5, delay: 0.9 },
+    { src: bandeja, className: "bottom-[4%] -left-6 w-32 sm:w-40 md:w-56", rot: "-6deg", z: 5, delay: 1 },
+    { src: mano, className: "bottom-[8%] right-[4%] w-24 sm:w-32 md:w-44", rot: "12deg", z: 5, delay: 1.1 },
   ];
   return (
-    <div className="md:hidden w-full mt-8">
-      <div
-        ref={ref}
-        className="relative w-full h-[55vh] overflow-hidden"
-      >
-        {items.map((it, i) => (
-          <motion.div
-            key={i}
-            drag
-            dragMomentum={false}
-            dragConstraints={ref}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 + i * 0.15 }}
-            className={`absolute ${it.w} cursor-grab active:cursor-grabbing`}
-            style={{
-              top: it.top,
-              left: it.left,
-              right: it.right,
-              bottom: it.bottom,
-              rotate: it.rot,
-              touchAction: "none",
-              userSelect: "none",
-            } as any}
-          >
-            <img src={it.src} alt="" className="w-full paper-shadow-lg pointer-events-none select-none" draggable={false} />
-          </motion.div>
-        ))}
-      </div>
-      <p className="text-center mt-3 text-[11px] text-silver tracking-wide font-sans">arrastrá las imágenes ✦</p>
+    <div
+      ref={ref}
+      className="relative w-full min-h-[80vh] md:min-h-[85vh] overflow-hidden flex items-center justify-center px-5"
+    >
+      {items.map((it, i) => (
+        <motion.div
+          key={i}
+          drag
+          dragMomentum={false}
+          dragConstraints={ref}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: it.delay }}
+          className={`absolute cursor-grab active:cursor-grabbing ${it.className}`}
+          style={{ rotate: it.rot, zIndex: it.z, touchAction: "none", userSelect: "none" }}
+        >
+          <img src={it.src} alt="" className="w-full paper-shadow-lg pointer-events-none select-none" draggable={false} />
+        </motion.div>
+      ))}
+      <motion.img
+        src={logo}
+        alt="CAOS"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative w-[75%] sm:w-[60%] md:w-[50%] max-w-xl pointer-events-none"
+        style={{ zIndex: 10, filter: "drop-shadow(0 6px 20px rgba(255,255,255,0.15))" }}
+      />
+      <p className="absolute bottom-2 left-0 right-0 text-center text-[10px] text-cream/50 tracking-wide font-sans md:hidden">
+        arrastrá las imágenes ✦
+      </p>
     </div>
   );
 }
