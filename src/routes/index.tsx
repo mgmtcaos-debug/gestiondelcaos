@@ -41,33 +41,15 @@ function Home() {
 
       {/* HERO */}
       <section className="relative bg-ink text-cream overflow-hidden">
-        <div className="relative max-w-6xl mx-auto px-5 md:px-10 py-16 md:py-32 md:min-h-[80vh] flex flex-col items-center justify-center">
-          <motion.img
-            src={logo}
-            alt="CAOS"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="w-[80%] md:w-[55%] max-w-2xl mx-auto relative z-10"
-            style={{ filter: "drop-shadow(0 6px 20px rgba(255,255,255,0.08))" }}
-          />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-            className="mt-8 md:mt-10 text-[10px] md:text-xs tracking-editorial uppercase text-cream/70 text-center font-sans"
-          >
-            universo creativo en expansión
-          </motion.p>
-
-          {/* Mobile: draggable scattered images */}
-          <MobileDraggable />
-
-          {/* Desktop: floating draggable photos */}
-          <DesktopDraggable img={plato} className="left-4 top-16 w-44 lg:w-56" rot="-8deg" delay={0.8} />
-          <DesktopDraggable img={bordado} className="right-6 top-32 w-40 lg:w-52" rot="6deg" delay={1} />
-          <DesktopDraggable img={bandeja} className="right-12 bottom-4 w-44 lg:w-56" rot="-4deg" delay={1.2} />
-        </div>
+        <HeroCollage />
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1 }}
+          className="pb-12 md:pb-16 text-[10px] md:text-xs tracking-editorial uppercase text-cream/70 text-center font-sans"
+        >
+          universo creativo en expansión
+        </motion.p>
       </section>
 
       {/* MANIFESTO */}
@@ -129,62 +111,47 @@ function Home() {
   );
 }
 
-function DesktopDraggable({ img, className, rot, delay }: { img: string; className: string; rot: string; delay: number }) {
-  return (
-    <motion.img
-      src={img}
-      alt=""
-      drag
-      dragMomentum={false}
-      dragConstraints={{ left: -150, right: 150, top: -80, bottom: 80 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay }}
-      className={`hidden md:block absolute paper-shadow-lg cursor-grab active:cursor-grabbing ${className}`}
-      style={{ rotate: rot, touchAction: "none", userSelect: "none" }}
-      draggable={false}
-    />
-  );
-}
-
-function MobileDraggable() {
+function HeroCollage() {
   const ref = useRef<HTMLDivElement>(null);
+  // images positioned around/behind the logo
   const items = [
-    { src: plato, top: "8%", left: "5%", w: "w-24", rot: "-8deg" },
-    { src: bordado, top: "20%", right: "8%", w: "w-28", rot: "10deg" },
-    { src: bandeja, bottom: "8%", left: "15%", w: "w-32", rot: "-4deg" },
+    { src: plato, className: "top-[6%] left-[2%] w-24 sm:w-32 md:w-44", rot: "-10deg", z: 5, delay: 0.8 },
+    { src: bordado, className: "top-[10%] right-[2%] w-28 sm:w-36 md:w-48", rot: "8deg", z: 5, delay: 0.9 },
+    { src: bandeja, className: "bottom-[4%] -left-6 w-32 sm:w-40 md:w-56", rot: "-6deg", z: 5, delay: 1 },
+    { src: mano, className: "bottom-[8%] right-[4%] w-24 sm:w-32 md:w-44", rot: "12deg", z: 5, delay: 1.1 },
   ];
   return (
-    <div className="md:hidden w-full mt-8">
-      <div
-        ref={ref}
-        className="relative w-full h-[55vh] overflow-hidden"
-      >
-        {items.map((it, i) => (
-          <motion.div
-            key={i}
-            drag
-            dragMomentum={false}
-            dragConstraints={ref}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 + i * 0.15 }}
-            className={`absolute ${it.w} cursor-grab active:cursor-grabbing`}
-            style={{
-              top: it.top,
-              left: it.left,
-              right: it.right,
-              bottom: it.bottom,
-              rotate: it.rot,
-              touchAction: "none",
-              userSelect: "none",
-            } as any}
-          >
-            <img src={it.src} alt="" className="w-full paper-shadow-lg pointer-events-none select-none" draggable={false} />
-          </motion.div>
-        ))}
-      </div>
-      <p className="text-center mt-3 text-[11px] text-silver tracking-wide font-sans">arrastrá las imágenes ✦</p>
+    <div
+      ref={ref}
+      className="relative w-full min-h-[80vh] md:min-h-[85vh] overflow-hidden flex items-center justify-center px-5"
+    >
+      {items.map((it, i) => (
+        <motion.div
+          key={i}
+          drag
+          dragMomentum={false}
+          dragConstraints={ref}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: it.delay }}
+          className={`absolute cursor-grab active:cursor-grabbing ${it.className}`}
+          style={{ rotate: it.rot, zIndex: it.z, touchAction: "none", userSelect: "none" }}
+        >
+          <img src={it.src} alt="" className="w-full paper-shadow-lg pointer-events-none select-none" draggable={false} />
+        </motion.div>
+      ))}
+      <motion.img
+        src={logo}
+        alt="CAOS"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative w-[75%] sm:w-[60%] md:w-[50%] max-w-xl pointer-events-none"
+        style={{ zIndex: 10, filter: "drop-shadow(0 6px 20px rgba(255,255,255,0.15))" }}
+      />
+      <p className="absolute bottom-2 left-0 right-0 text-center text-[10px] text-cream/50 tracking-wide font-sans md:hidden">
+        arrastrá las imágenes ✦
+      </p>
     </div>
   );
 }
