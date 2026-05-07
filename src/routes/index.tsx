@@ -41,33 +41,15 @@ function Home() {
 
       {/* HERO */}
       <section className="relative bg-ink text-cream overflow-hidden">
-        <div className="relative max-w-6xl mx-auto px-5 md:px-10 py-16 md:py-32 md:min-h-[80vh] flex flex-col items-center justify-center">
-          <motion.img
-            src={logo}
-            alt="CAOS"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="w-[80%] md:w-[55%] max-w-2xl mx-auto relative z-10"
-            style={{ filter: "drop-shadow(0 6px 20px rgba(255,255,255,0.08))" }}
-          />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-            className="mt-8 md:mt-10 text-[10px] md:text-xs tracking-editorial uppercase text-cream/70 text-center font-sans"
-          >
-            universo creativo en expansión
-          </motion.p>
-
-          {/* Mobile: draggable scattered images */}
-          <MobileDraggable />
-
-          {/* Desktop: floating draggable photos */}
-          <DesktopDraggable img={plato} className="left-4 top-16 w-44 lg:w-56" rot="-8deg" delay={0.8} />
-          <DesktopDraggable img={bordado} className="right-6 top-32 w-40 lg:w-52" rot="6deg" delay={1} />
-          <DesktopDraggable img={bandeja} className="right-12 bottom-4 w-44 lg:w-56" rot="-4deg" delay={1.2} />
-        </div>
+        <HeroCollage />
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1 }}
+          className="pb-12 md:pb-16 text-[10px] md:text-xs tracking-editorial uppercase text-cream/70 text-center font-sans"
+        >
+          universo creativo en expansión
+        </motion.p>
       </section>
 
       {/* MANIFESTO */}
