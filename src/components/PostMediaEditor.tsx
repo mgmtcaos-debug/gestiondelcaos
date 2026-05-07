@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { FileUpload } from "./FileUpload";
 
 type Media = {
   id?: string;
@@ -94,18 +95,18 @@ export function PostMediaEditor({ postId }: { postId: string }) {
         {visible.map((m, i) => {
           const idx = items.indexOf(m);
           return (
-            <div key={m.id ?? `new-${idx}`} className="border border-ink/20 p-3 grid md:grid-cols-[80px_1fr_auto] gap-3 items-start">
-              {m.url && m.media_type === "image" ? (
-                <img src={m.url} alt="" className="w-20 h-20 object-cover" />
-              ) : (
-                <div className="w-20 h-20 bg-silver/30 flex items-center justify-center text-[10px] uppercase tracking-editorial">{m.media_type}</div>
-              )}
+            <div key={m.id ?? `new-${idx}`} className="border border-ink/20 p-3 grid md:grid-cols-[1fr_auto] gap-3 items-start">
               <div className="space-y-2">
                 <select value={m.media_type} onChange={(e) => update(idx, { media_type: e.target.value as any })} className={inp}>
                   <option value="image">imagen</option>
-                  <option value="video">video (youtube/vimeo/url)</option>
+                  <option value="video">video (youtube/vimeo/mp4)</option>
                 </select>
-                <input placeholder="URL" value={m.url} onChange={(e) => update(idx, { url: e.target.value })} className={inp} />
+                <FileUpload
+                  value={m.url}
+                  onChange={(url) => update(idx, { url })}
+                  accept={m.media_type === "image" ? "image/*" : "video/*"}
+                  folder={`posts/${postId}`}
+                />
                 <input placeholder="caption (opcional)" value={m.caption ?? ""} onChange={(e) => update(idx, { caption: e.target.value })} className={inp} />
               </div>
               <div className="flex md:flex-col gap-1">

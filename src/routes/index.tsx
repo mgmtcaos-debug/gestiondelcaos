@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteNav } from "@/components/SiteNav";
@@ -60,56 +60,13 @@ function Home() {
             universo creativo en expansión
           </motion.p>
 
-          {/* Mobile: 2-col grid of brand assets */}
-          <div className="md:hidden mt-10 grid grid-cols-2 gap-4 w-full">
-            {[plato, bordado, bandeja].map((src, i) => (
-              <motion.img
-                key={i}
-                src={src}
-                alt=""
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + i * 0.15 }}
-                className={`w-full paper-shadow-lg ${i === 2 ? "col-span-2 max-w-[60%] mx-auto" : ""}`}
-                style={{ rotate: `${[-4, 4, -2][i]}deg` }}
-              />
-            ))}
-          </div>
+          {/* Mobile: draggable scattered images */}
+          <MobileDraggable />
 
           {/* Desktop: floating draggable photos */}
-          <motion.img
-            src={plato}
-            alt=""
-            drag
-            dragConstraints={{ left: -100, right: 100, top: -50, bottom: 50 }}
-            initial={{ opacity: 0, rotate: -8 }}
-            animate={{ opacity: 1, rotate: -8 }}
-            transition={{ delay: 0.8 }}
-            className="hidden md:block absolute left-4 top-16 w-44 lg:w-56 paper-shadow-lg cursor-grab active:cursor-grabbing"
-            style={{ rotate: "-8deg" }}
-          />
-          <motion.img
-            src={bordado}
-            alt=""
-            drag
-            dragConstraints={{ left: -100, right: 100, top: -50, bottom: 50 }}
-            initial={{ opacity: 0, rotate: 6 }}
-            animate={{ opacity: 1, rotate: 6 }}
-            transition={{ delay: 1 }}
-            className="hidden md:block absolute right-6 top-32 w-40 lg:w-52 paper-shadow-lg cursor-grab active:cursor-grabbing"
-            style={{ rotate: "6deg" }}
-          />
-          <motion.img
-            src={bandeja}
-            alt=""
-            drag
-            dragConstraints={{ left: -100, right: 100, top: -50, bottom: 50 }}
-            initial={{ opacity: 0, rotate: -4 }}
-            animate={{ opacity: 1, rotate: -4 }}
-            transition={{ delay: 1.2 }}
-            className="hidden md:block absolute right-12 bottom-4 w-44 lg:w-56 paper-shadow-lg cursor-grab active:cursor-grabbing"
-            style={{ rotate: "-4deg" }}
-          />
+          <DesktopDraggable img={plato} className="left-4 top-16 w-44 lg:w-56" rot="-8deg" delay={0.8} />
+          <DesktopDraggable img={bordado} className="right-6 top-32 w-40 lg:w-52" rot="6deg" delay={1} />
+          <DesktopDraggable img={bandeja} className="right-12 bottom-4 w-44 lg:w-56" rot="-4deg" delay={1.2} />
         </div>
       </section>
 
@@ -168,6 +125,66 @@ function Home() {
       </section>
 
       <SiteFooter />
+    </div>
+  );
+}
+
+function DesktopDraggable({ img, className, rot, delay }: { img: string; className: string; rot: string; delay: number }) {
+  return (
+    <motion.img
+      src={img}
+      alt=""
+      drag
+      dragMomentum={false}
+      dragConstraints={{ left: -150, right: 150, top: -80, bottom: 80 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay }}
+      className={`hidden md:block absolute paper-shadow-lg cursor-grab active:cursor-grabbing ${className}`}
+      style={{ rotate: rot, touchAction: "none", userSelect: "none" }}
+      draggable={false}
+    />
+  );
+}
+
+function MobileDraggable() {
+  const ref = useRef<HTMLDivElement>(null);
+  const items = [
+    { src: plato, top: "8%", left: "5%", w: "w-24", rot: "-8deg" },
+    { src: bordado, top: "20%", right: "8%", w: "w-28", rot: "10deg" },
+    { src: bandeja, bottom: "8%", left: "15%", w: "w-32", rot: "-4deg" },
+  ];
+  return (
+    <div className="md:hidden w-full mt-8">
+      <div
+        ref={ref}
+        className="relative w-full h-[55vh] overflow-hidden"
+      >
+        {items.map((it, i) => (
+          <motion.div
+            key={i}
+            drag
+            dragMomentum={false}
+            dragConstraints={ref}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 + i * 0.15 }}
+            className={`absolute ${it.w} cursor-grab active:cursor-grabbing`}
+            style={{
+              top: it.top,
+              left: it.left,
+              right: it.right,
+              bottom: it.bottom,
+              rotate: it.rot,
+              touchAction: "none",
+              userSelect: "none",
+            } as any}
+          >
+            <img src={it.src} alt="" className="w-full paper-shadow-lg pointer-events-none select-none" draggable={false} />
+          </motion.div>
+        ))}
+      </div>
+      <p className="text-center mt-3 text-[11px] text-silver tracking-wide font-sans">arrastrá las imágenes ✦</p>
     </div>
   );
 }

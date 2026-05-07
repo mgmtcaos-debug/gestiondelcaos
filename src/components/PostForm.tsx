@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/auth";
 import { toast } from "sonner";
+import { FileUpload } from "./FileUpload";
 
 const CATS = ["cultura", "plata", "creatividad", "sin filtro"];
 
@@ -69,8 +70,10 @@ export function PostForm({ id }: { id?: string }) {
         </div>
       </div>
       <div>
-        <label className={lbl}>imagen de portada (URL)</label>
-        <input value={form.cover_image_url} onChange={(e) => update("cover_image_url", e.target.value)} className={inp} />
+        <label className={lbl}>imagen de portada</label>
+        <div className="mt-1">
+          <FileUpload value={form.cover_image_url} onChange={(url) => update("cover_image_url", url)} accept="image/*" folder="covers" />
+        </div>
       </div>
       <div>
         <label className={lbl}>extracto</label>
