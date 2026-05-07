@@ -82,6 +82,8 @@
 @layer utilities {
   .paper-shadow { box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 8px 24px -12px rgba(0,0,0,0.18); }
   .paper-shadow-lg { box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 22px 44px -18px rgba(0,0,0,0.28); }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   @media (min-width: 768px) {
     body.cursor-cross, body.cursor-cross * { cursor: crosshair; }
   }
