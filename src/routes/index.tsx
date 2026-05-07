@@ -102,16 +102,22 @@ function Home() {
         <img
           src={mano}
           alt=""
-          className="hidden md:block absolute right-0 top-10 w-64 lg:w-80 opacity-90 pointer-events-none"
-          style={{ transform: "rotate(4deg)" }}
+          className="hidden md:block absolute -right-10 top-0 w-64 lg:w-80 opacity-95 pointer-events-none"
+          style={{ transform: "rotate(6deg)" }}
         />
-        <div className="relative max-w-3xl">
-          <p className="font-display text-3xl md:text-5xl leading-[1.15]">
-            <span className="font-script text-cherry text-7xl md:text-8xl leading-none mr-1 align-text-top">C</span>
-            ultura filtrada con criterio creativo. Plata sin filtros corporativos. Lo políticamente incorrecto como punto de partida. Monetizar una vida creativa <em className="text-cherry">sin pedir permiso</em>.
+        <div className="relative max-w-3xl font-display text-2xl md:text-4xl leading-[1.25] space-y-4">
+          <p>
+            <span className="font-script text-cherry text-7xl md:text-8xl leading-none mr-1 align-text-top float-left">D</span>
+            urante años lo llamaron desorden.
           </p>
-          <div className="mt-8 h-px w-24 bg-silver" />
-          <p className="mt-4 text-[11px] tracking-editorial uppercase text-muted-foreground">— manifiesto caos</p>
+          <p>Nosotras aprendimos a llamarlo por su nombre.</p>
+          <p>El caos no es lo que pasa cuando perdés el control.</p>
+          <p>Es lo que pasa justo antes de que todo tenga sentido.</p>
+          <p>Un espacio donde escribimos, opinamos, creamos, invitamos e incomodamos.</p>
+          <p>Sin límites fijos. Sin una sola forma. <em className="text-cherry">Sin permiso de nadie.</em></p>
+          <p><em>Tomá asiento, la mesa está servida.</em></p>
+          <div className="h-px w-24 bg-silver mt-8" />
+          <p className="text-[11px] tracking-editorial uppercase text-muted-foreground font-sans not-italic">— manifiesto caos</p>
         </div>
       </section>
 
