@@ -41,7 +41,7 @@ function Home() {
 
       {/* HERO */}
       <section className="relative bg-ink text-cream overflow-hidden">
-        <div className="relative max-w-6xl mx-auto px-5 md:px-10 py-20 md:py-32 min-h-[80vh] flex flex-col items-center justify-center">
+        <div className="relative max-w-6xl mx-auto px-5 md:px-10 py-16 md:py-32 md:min-h-[80vh] flex flex-col items-center justify-center">
           <motion.img
             src={logo}
             alt="CAOS"
@@ -55,12 +55,28 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
-            className="mt-10 text-[10px] md:text-xs tracking-editorial uppercase text-cream/70 text-center"
+            className="mt-8 md:mt-10 text-[10px] md:text-xs tracking-editorial uppercase text-cream/70 text-center font-sans"
           >
             universo creativo en expansión
           </motion.p>
 
-          {/* Floating brand photos — desktop only draggable */}
+          {/* Mobile: 2-col grid of brand assets */}
+          <div className="md:hidden mt-10 grid grid-cols-2 gap-4 w-full">
+            {[plato, bordado, bandeja].map((src, i) => (
+              <motion.img
+                key={i}
+                src={src}
+                alt=""
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 + i * 0.15 }}
+                className={`w-full paper-shadow-lg ${i === 2 ? "col-span-2 max-w-[60%] mx-auto" : ""}`}
+                style={{ rotate: `${[-4, 4, -2][i]}deg` }}
+              />
+            ))}
+          </div>
+
+          {/* Desktop: floating draggable photos */}
           <motion.img
             src={plato}
             alt=""
