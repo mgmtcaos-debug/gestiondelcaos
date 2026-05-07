@@ -43,25 +43,13 @@ export function SiteNav() {
   );
 
   return (
-    <header className="relative z-30 px-5 md:px-10 pt-6 pb-2">
+    <header className="hidden md:block relative z-30 px-5 md:px-10 pt-6 pb-2">
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img src={logo} alt="CAOS" className="h-7 md:h-9 w-auto" />
+          <img src={logo} alt="CAOS" className="h-9 w-auto" />
         </Link>
-        <nav className="hidden md:flex gap-8">{links}</nav>
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden p-2 -mr-2"
-          aria-label={open ? "cerrar menú" : "abrir menú"}
-        >
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <nav className="flex gap-8">{links}</nav>
       </div>
-      {open && (
-        <nav className="md:hidden mt-4 pb-4 flex flex-col gap-4 border-t border-ink/10 pt-4">
-          {links}
-        </nav>
-      )}
     </header>
   );
 }
