@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/auth";
 import { toast } from "sonner";
+import { FileUpload } from "./FileUpload";
 
 const CATS = ["cultura", "plata", "creatividad", "sin filtro"];
 
