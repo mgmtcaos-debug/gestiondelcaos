@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://jameyjtjzrofkyzawrwa.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "caos-creative-studio",
+      "version": "0.1.0",
+      "title": "CAOS Creative Studio"
+    },
+    "tools": [
+      {
+        "name": "list_posts",
+        "title": "Listar publicaciones",
+        "description": "List blog posts of CAOS, optionally filtered by published state or category.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "published": {
+              "description": "Filter by published state.",
+              "type": "boolean"
+            },
+            "category": {
+              "description": "Filter by category.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max rows (default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_post",
+        "title": "Ver publicación",
+        "description": "Get one blog post by slug, including its full markdown content and attached media.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The post slug."
+            }
+          },
+          "required": [
+            "slug"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_post",
+        "title": "Crear publicación",
+        "description": "Create a new CAOS blog post. Created as a draft unless published is true.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Post title."
+            },
+            "content": {
+              "type": "string",
+              "description": "Post body in markdown."
+            },
+            "excerpt": {
+              "description": "Short summary shown on cards.",
+              "type": "string"
+            },
+            "category": {
+              "description": "Category label.",
+              "type": "string"
+            },
+            "slug": {
+              "description": "URL slug; derived from the title when omitted.",
+              "type": "string"
+            },
+            "cover_image_url": {
+              "description": "Absolute URL of the cover image.",
+              "type": "string"
+            },
+            "published": {
+              "description": "Publish immediately (default false).",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "title",
+            "content"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_post",
+        "title": "Editar publicación",
+        "description": "Update fields of an existing CAOS blog post, identified by its slug.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Slug of the post to update."
+            },
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "description": "New markdown body.",
+              "type": "string"
+            },
+            "excerpt": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "new_slug": {
+              "description": "Change the slug.",
+              "type": "string"
+            },
+            "cover_image_url": {
+              "type": "string"
+            },
+            "published": {
+              "description": "Publish or unpublish.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "slug"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_resources",
+        "title": "Listar recursos",
+        "description": "List the free downloadable resources of CAOS.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "published": {
+              "description": "Filter by published state.",
+              "type": "boolean"
+            },
+            "limit": {
+              "description": "Max rows (default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_resource",
+        "title": "Crear recurso",
+        "description": "Create a downloadable CAOS resource pointing at an already hosted file URL.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "file_url": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Absolute URL of the downloadable file."
+            },
+            "description": {
+              "type": "string"
+            },
+            "cover_image_url": {
+              "type": "string"
+            },
+            "requires_email": {
+              "description": "Ask visitors for their email before download.",
+              "type": "boolean"
+            },
+            "published": {
+              "description": "Publish immediately (default false).",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "title",
+            "file_url"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_subscribers",
+        "title": "Listar suscriptores",
+        "description": "List newsletter subscribers with their signup date. Contains personal data.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "description": "Max rows (default 100).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
