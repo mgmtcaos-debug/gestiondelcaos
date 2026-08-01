@@ -5,11 +5,15 @@ import { toast } from "sonner";
 import logo from "@/assets/caos-logo.png";
 
 export const Route = createFileRoute("/admin/login")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    next: typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//") ? s.next : undefined,
+  }),
   component: Login,
 });
 
 function Login() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,6 +24,7 @@ function Login() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) { toast.error(error.message); return; }
+    if (next) { window.location.href = next; return; }
     navigate({ to: "/admin" });
   }
 
