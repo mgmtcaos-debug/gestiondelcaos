@@ -3,7 +3,14 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/caos-logo.png";
 
+type OAuthDetails = {
+  client?: { name?: string } | null;
+  redirect_url?: string | null;
+  redirect_to?: string | null;
+};
+
 export const Route = createFileRoute("/.lovable/oauth/consent")({
+
   ssr: false,
   validateSearch: (s: Record<string, unknown>) => ({
     authorization_id: typeof s.authorization_id === "string" ? s.authorization_id : "",
