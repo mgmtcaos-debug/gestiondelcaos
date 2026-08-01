@@ -19,14 +19,20 @@ export default defineTool({
   annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ slug, new_slug, ...fields }, ctx) => {
     if (!ctx.isAuthenticated()) return errorResult("Not authenticated");
-    const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
-    for (const [key, value] of Object.entries(fields)) {
-      if (value !== undefined) patch[key] = value;
-    }
-    if (new_slug) patch.slug = new_slug;
+    const patch = {
+      updated_at: new Date().toISOString(),
+      ...(fields.title !== undefined ? { title: fields.title } : {}),
+      ...(fields.content !== undefined ? { content: fields.content } : {}),
+      ...(fields.excerpt !== undefined ? { excerpt: fields.excerpt } : {}),
+      ...(fields.category !== undefined ? { category: fields.category } : {}),
+      ...(fields.cover_image_url !== undefined ? { cover_image_url: fields.cover_image_url } : {}),
+      ...(fields.published !== undefined ? { published: fields.published } : {}),
+      ...(new_slug ? { slug: new_slug } : {}),
+    };
     const { data, error } = await supabaseForUser(ctx)
       .from("posts")
       .update(patch)
+
       .eq("slug", slug)
       .select()
       .maybeSingle();
