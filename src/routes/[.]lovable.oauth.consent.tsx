@@ -59,7 +59,9 @@ function Consent() {
       setError(error.message);
       return;
     }
-    const target = data?.redirect_url ?? data?.redirect_to;
+    const result = data as OAuthDetails | null;
+    const target = result?.redirect_url ?? result?.redirect_to;
+
     if (!target) {
       setBusy(false);
       setError("El servidor de autorización no devolvió una redirección.");
