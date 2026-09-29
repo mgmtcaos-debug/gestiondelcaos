@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import logo from "@/assets/caos-logo.png";
 
 export const Route = createFileRoute("/admin/login")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { next?: string } => ({
     next: typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//") ? s.next : undefined,
   }),
   component: Login,
