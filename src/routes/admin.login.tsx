@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import logo from "@/assets/caos-logo.png";
 
 export const Route = createFileRoute("/admin/login")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { next?: string } => ({
     next: typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//") ? s.next : undefined,
   }),
   component: Login,
@@ -46,6 +46,13 @@ function Login() {
           </div>
           <button disabled={loading} className="w-full mt-6 bg-ink text-cream py-3 text-xs uppercase tracking-editorial hover:bg-cherry transition-colors disabled:opacity-50">
             entrar
+          </button>
+          <button type="button" onClick={async () => {
+            if (!email) { toast.error("Escribí tu email primero"); return; }
+            const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` });
+            if (error) toast.error(error.message); else toast.success("Te enviamos un email para restablecer la contraseña");
+          }} className="w-full text-[11px] tracking-editorial uppercase text-muted-foreground hover:text-cherry">
+            olvidé mi contraseña
           </button>
         </form>
       </div>

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RecursosRouteImport } from './routes/recursos'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as ContactoRouteImport } from './routes/contacto'
@@ -29,6 +30,11 @@ import { Route as AdminPostsIdRouteImport } from './routes/admin.posts.$id'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecursosRoute = RecursosRouteImport.update({
   id: '/recursos',
   path: '/recursos',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/contacto': typeof ContactoRoute
   '/mcp': typeof McpRoute
   '/recursos': typeof RecursosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/login': typeof AdminLoginRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/contacto': typeof ContactoRoute
   '/mcp': typeof McpRoute
   '/recursos': typeof RecursosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/login': typeof AdminLoginRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/contacto': typeof ContactoRoute
   '/mcp': typeof McpRoute
   '/recursos': typeof RecursosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/login': typeof AdminLoginRoute
@@ -199,6 +208,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/mcp'
     | '/recursos'
+    | '/reset-password'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/login'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/mcp'
     | '/recursos'
+    | '/reset-password'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/login'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/mcp'
     | '/recursos'
+    | '/reset-password'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/login'
@@ -263,6 +275,7 @@ export interface RootRouteChildren {
   ContactoRoute: typeof ContactoRoute
   McpRoute: typeof McpRoute
   RecursosRoute: typeof RecursosRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -282,6 +295,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recursos': {
       id: '/recursos'
       path: '/recursos'
@@ -423,6 +443,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactoRoute: ContactoRoute,
   McpRoute: McpRoute,
   RecursosRoute: RecursosRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
