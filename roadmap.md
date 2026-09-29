@@ -1,4 +1,4 @@
 # Roadmap
-- [ ] Fix blank screen (CSS import order)
-- [ ] Admin password recovery (forgot password + reset page)
-- [ ] Site optimization review (answer user)
+- [x] Fix blank screen (CSS import order)
+- [x] Admin password recovery (forgot password + reset page)
+- [x] Site optimization review (answer user)
